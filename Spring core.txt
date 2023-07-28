@@ -1,0 +1,132 @@
+package com.spring.Core;
+
+public interface Sim {
+	public void service();
+	}
+package com.spring.Core;
+
+public class Mobile {
+	//private callService callService;
+	//private dataService dataService;
+	//private missedcallAlert missedCallAlertService;
+	//private CallerTuneService callerTuneService;
+	private Sim service1;
+	private Sim service2;
+	private Sim service3;
+	private Sim service4;
+	
+
+	
+	public void setService1(Sim service1) {
+		this.service1 = service1;
+	}
+	
+	
+	public void setService2(Sim service2) {
+		this.service2 = service2;
+	}
+	
+	public void setService3(Sim service3) {
+		this.service3 = service3;
+	}
+	
+	public void setService4(Sim service4) {
+		this.service4 = service4;
+	}
+	/*public void setCallService(callService callService) {
+		this.callService = callService;
+	}
+public void setDataService(dataService  dataService) {
+		this.dataService = dataService;
+	}
+
+public void setMissedCallAlertService(missedcallAlert missedCallAlertService) {
+		this.missedCallAlertService = missedCallAlertService;
+	}
+
+public void setCallerTuneService(CallerTuneService callerTuneService) {
+		this.callerTuneService = callerTuneService;
+	}*/
+public void Service() {
+
+		//System.out.println("Active Services : ");
+		if (service1 != null)
+			service1.service();
+		if (service2 != null)
+			service2.service();
+		if (service3 != null)
+		   service3.service();
+		if (service4 != null)
+			service4.service();
+		
+	}
+
+}
+
+public class callService  implements Sim {
+
+	public void service() {
+
+		System.out.println("Call Service Activated");
+
+	}
+
+}
+public class dataService implements Sim {
+
+	public void service() {
+
+		System.out.println("Data Service Activated");
+
+	}
+}
+public class CallerTuneService  implements Sim {
+
+	public void service() {
+
+		System.out.println("Caller Tune Service Activated");
+
+	}
+}
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class App {
+
+	public static void main(String[] args) {
+
+		ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+		Mobile mb = ac.getBean("gk", Mobile.class);
+		Mobile mb1=ac.getBean("keerthana",Mobile.class);
+		mb.Service();
+        mb1.Service();
+	}
+}
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="cs" class="com.spring.Core.callService" />
+	<bean id="ds" class="com.spring.Core.dataService" />
+	<bean id="mcas" class="com.spring.Core.missedcallAlert" />
+	<bean id="cts" class="com.spring.Core.CallerTuneService" />
+
+
+
+	<bean id="keerthana" class="com.spring.Core.Mobile">
+
+		<property name="service1" ref="cs" />
+		<property name="service2" ref="ds" />
+		<property name="service3" ref="mcas" />
+		<property name="service4" ref="cts" />
+	</bean>
+
+	<bean id="gk" class="com.spring.Core.Mobile">
+		<property name="service1" ref="cs" />
+		<property name="service4" ref="ds" />
+        <property name="service3" ref="mcas" />
+	</bean>
+
+</beans>
